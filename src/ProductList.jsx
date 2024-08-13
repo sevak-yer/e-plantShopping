@@ -261,6 +261,8 @@ const handleAddToCart = (product) => {
      [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
    }));
 };  
+
+const cartItems = useSelector(state => state.cart.items);
     return (
         <div>
              <div className="navbar" style={styleObj}>
@@ -292,8 +294,9 @@ const handleAddToCart = (product) => {
             <div className="product-card" key={plantIndex}>
                 <img className="product-image" src={plant.image} alt={plant.name} />
                 <div className="product-title">{plant.name}</div>
-                {/*Similarly like the above plant.name show other details like description and cost*/}
-                <button  className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                <div className="product-description">{plant.description}</div>
+                <div className="product-price">{plant.cost}</div>
+                <button  disabled={cartItems.find(item => item.name===plant.name)} className={`product-button ${cartItems.find(item => item.name===plant.name) && 'added-to-cart'}`} onClick={() => handleAddToCart(plant)}>{cartItems.find(item => item.name===plant.name) ? 'Added to Cart' : 'Add to Cart'}</button>
             </div>
             ))}
         </div>
